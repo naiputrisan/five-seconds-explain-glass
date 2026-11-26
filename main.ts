@@ -10,6 +10,10 @@ const ENTRY =
 if (ENTRY.length < 1 || ENTRY.length > 200) {
   throw new Error(`entry is ${ENTRY.length} characters, gate needs 1-200`);
 }
+// The judge compares single sentences: exactly one sentence-ending mark.
+if (ENTRY.split(/[.!?]/).filter((part) => part.trim().length > 0).length !== 1) {
+  throw new Error("entry must be exactly one sentence");
+}
 
 await mkdir("/output", { recursive: true });
 await writeFile("/output/entry.txt", ENTRY, "utf8");
